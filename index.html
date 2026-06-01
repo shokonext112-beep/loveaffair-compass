@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>恋愛コンパス診断 | and her</title>
+<meta property="og:title" content="恋愛コンパス診断 | and her">
+<meta property="og:description" content="あなたの恋愛が動き出す場所がわかる。15問・無料・全16タイプ">
+<meta name="theme-color" content="#f5f2ee">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;500;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f5f2ee;
+  --bg2:#ede9e3;
+  --bg3:#e8e3db;
+  --surface:#ffffff;
+  --surface2:#f0ece6;
+  --accent:#a07830;
+  --accent2:#c49a4a;
+  --accent3:#d4aa5a;
+  --text:#2a2420;
+  --text2:#5a504a;
+  --text3:#9a8f88;
+  --border:rgba(160,120,48,0.25);
+  --border2:rgba(160,120,48,0.12);
+  --borderl:rgba(42,36,32,0.1);
+  --radius:12px;
+  --radius-lg:20px;
+}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Noto Sans JP',sans-serif;
+  font-weight:300;
+  line-height:1.8;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+body::before{
+  content:'';
+  position:fixed;
+  top:-20%;left:-10%;
+  width:60vw;height:60vw;
+  background:radial-gradient(circle,rgba(160,120,48,0.04) 0%,transparent 70%);
+  pointer-events:none;
+  z-index:0;
+}
+body::after{
+  content:'';
+  position:fixed;
+  bottom:-10%;right:-10%;
+  width:50vw;height:50vw;
+  background:radial-gradient(circle,rgba(160,120,48,0.03) 0%,transparent 70%);
+  pointer-events:none;
+  z-index:0;
+}
+.page{
+  position:relative;
+  z-index:1;
+  max-width:680px;
+  margin:0 auto;
+  padding:0 20px;
+}
+.header{
+  text-align:center;
+  padding:60px 0 48px;
+}
+.brand{
+  font-size:13px;
+  letter-spacing:0.25em;
+  color:var(--accent);
+  font-weight:400;
+  margin-bottom:28px;
+  text-transform:uppercase;
+}
+.title-jp{
+  font-family:'Noto Serif JP',serif;
+  font-size:clamp(28px,7vw,44px);
+  font-weight:700;
+  letter-spacing:0.05em;
+  line-height:1.3;
+  margin-bottom:16px;
+  color:var(--text);
+}
+.title-accent{
+  background:linear-gradient(135deg,var(--accent) 0%,var(--accent3) 100%);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.subtitle{
+  font-size:15px;
+  color:var(--text2);
+  font-weight:300;
+  letter-spacing:0.05em;
+  margin-bottom:40px;
+}
+.tags{
+  display:flex;
+  justify-content:center;
+  gap:12px;
+  flex-wrap:wrap;
+}
+.tag{
+  font-size:12px;
+  padding:5px 14px;
+  border:0.5px solid var(--border);
+  border-radius:100px;
+  color:var(--text2);
+  letter-spacing:0.08em;
+  background:var(--surface);
+}
+.progress-wrap{margin-bottom:40px}
+.progress-label{
+  display:flex;
+  justify-content:space-between;
+  font-size:12px;
+  color:var(--text3);
+  margin-bottom:8px;
+  letter-spacing:0.05em;
+}
+.progress-bar{
+  height:2px;
+  background:var(--bg3);
+  border-radius:100px;
+  overflow:hidden;
+}
+.progress-fill{
+  height:100%;
+  background:linear-gradient(90deg,var(--accent),var(--accent3));
+  border-radius:100px;
+  transition:width 0.5s cubic-bezier(0.4,0,0.2,1);
+}
+.card{
+  background:var(--surface);
+  border:0.5px solid var(--borderl);
+  border-radius:var(--radius-lg);
+  padding:36px 32px;
+  margin-bottom:24px;
+  box-shadow:0 2px 20px rgba(42,36,32,0.06);
+}
+.q-section{
+  font-size:11px;
+  letter-spacing:0.2em;
+  color:var(--accent);
+  text-transform:uppercase;
+  margin-bottom:8px;
+  font-weight:400;
+}
+.q-number{
+  font-size:12px;
+  color:var(--text3);
+  margin-bottom:16px;
+}
+.q-text{
+  font-family:'Noto Serif JP',serif;
+  font-size:clamp(16px,4vw,20px);
+  font-weight:500;
+  line-height:1.6;
+  margin-bottom:32px;
+  letter-spacing:0.02em;
+  color:var(--text);
+}
+.choices{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+.choice{
+  position:relative;
+  padding:16px 20px 16px 52px;
+  border:0.5px solid var(--borderl);
+  border-radius:var(--radius);
+  cursor:pointer;
+  font-size:14px;
+  color:var(--text2);
+  line-height:1.6;
+  transition:all 0.25s ease;
+  background:var(--bg);
+  user-select:none;
+}
+.choice::before{
+  content:'';
+  position:absolute;
+  left:18px;
+  top:50%;
+  transform:translateY(-50%);
+  width:20px;
+  height:20px;
+  border:1px solid var(--text3);
+  border-radius:50%;
+  transition:all 0.25s ease;
+  background:var(--surface);
+}
+.choice:hover{
+  border-color:var(--border);
+  color:var(--text);
+  background:var(--surface);
+}
+.choice.selected{
+  border-color:var(--accent);
+  color:var(--text);
+  background:rgba(160,120,48,0.05);
+}
+.choice.selected::before{
+  background:var(--accent);
+  border-color:var(--accent);
+  box-shadow:0 0 0 3px rgba(160,120,48,0.15);
+}
+.choice.selected::after{
+  content:'';
+  position:absolute;
+  left:22px;
+  top:50%;
+  transform:translateY(-50%) rotate(45deg);
+  width:6px;
+  height:10px;
+  border-right:2px solid #fff;
+  border-bottom:2px solid #fff;
+  margin-top:-1px;
+}
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  width:100%;
+  padding:18px 32px;
+  border-radius:var(--radius);
+  font-family:'Noto Sans JP',sans-serif;
+  font-size:15px;
+  font-weight:500;
+  letter-spacing:0.1em;
+  cursor:pointer;
+  transition:all 0.3s ease;
+  border:none;
+  outline:none;
+}
+.btn-primary{
+  background:linear-gradient(135deg,var(--accent) 0%,var(--accent3) 100%);
+  color:#fff;
+}
+.btn-primary:hover{
+  transform:translateY(-2px);
+  box-shadow:0 8px 30px rgba(160,120,48,0.3);
+}
+.btn-primary:active{transform:translateY(0)}
+.btn-primary:disabled{
+  opacity:0.35;
+  cursor:not-allowed;
+  transform:none;
+  box-shadow:none;
+}
+.btn-ghost{
+  background:transparent;
+  color:var(--text3);
+  border:0.5px solid var(--borderl);
+  font-size:13px;
+  padding:12px 24px;
+  width:auto;
+  margin-top:12px;
+}
+.btn-ghost:hover{color:var(--text2);border-color:var(--border)}
+.intro-icon{
+  font-size:48px;
+  margin-bottom:24px;
+  display:block;
+  text-align:center;
+}
+.intro-body{
+  font-size:15px;
+  color:var(--text2);
+  line-height:2;
+  margin-bottom:32px;
+  text-align:center;
+}
+.intro-note{
+  font-size:12px;
+  color:var(--text3);
+  text-align:center;
+  letter-spacing:0.05em;
+  margin-top:16px;
+}
+.divider{
+  height:0.5px;
+  background:var(--borderl);
+  margin:32px 0;
+}
+.result-badge{
+  display:inline-block;
+  font-size:11px;
+  letter-spacing:0.2em;
+  color:var(--accent);
+  border:0.5px solid var(--border);
+  padding:6px 16px;
+  border-radius:100px;
+  margin-bottom:24px;
+  text-transform:uppercase;
+  font-weight:400;
+  background:rgba(160,120,48,0.05);
+}
+.result-code{
+  font-family:'Noto Sans JP',sans-serif;
+  font-size:13px;
+  letter-spacing:0.3em;
+  color:var(--accent2);
+  font-weight:500;
+  margin-bottom:8px;
+}
+.result-type{
+  font-family:'Noto Serif JP',serif;
+  font-size:clamp(22px,6vw,34px);
+  font-weight:700;
+  line-height:1.4;
+  margin-bottom:8px;
+  color:var(--text);
+}
+.result-sub{
+  font-size:14px;
+  color:var(--text2);
+  margin-bottom:32px;
+  line-height:1.8;
+}
+.axis-grid{
+  position:relative;
+  width:100%;
+  max-width:300px;
+  margin:0 auto 8px;
+}
+.axis-grid svg{width:100%;height:auto}
+.axis-labels{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin-top:12px;
+}
+.axis-label{
+  font-size:11px;
+  color:var(--text3);
+  text-align:center;
+  padding:4px 8px;
+  background:var(--bg2);
+  border-radius:100px;
+  letter-spacing:0.05em;
+}
+.axis-label span{
+  color:var(--accent);
+  font-weight:500;
+}
+.result-block{margin-bottom:24px}
+.result-block-label{
+  font-size:11px;
+  letter-spacing:0.2em;
+  color:var(--accent);
+  text-transform:uppercase;
+  font-weight:500;
+  margin-bottom:10px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.result-block-label::before{
+  content:'';
+  display:inline-block;
+  width:16px;
+  height:1px;
+  background:var(--accent);
+}
+.result-block-text{
+  font-size:14px;
+  color:var(--text2);
+  line-height:1.9;
+}
+.result-block-text strong{
+  color:var(--text);
+  font-weight:500;
+}
+.result-tags{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:10px;
+}
+.result-tag{
+  font-size:12px;
+  padding:5px 12px;
+  border:0.5px solid var(--border);
+  border-radius:100px;
+  color:var(--accent);
+  background:rgba(160,120,48,0.04);
+}
+.cta-card{
+  background:var(--surface);
+  border:0.5px solid var(--border);
+  border-radius:var(--radius-lg);
+  padding:36px 32px;
+  text-align:center;
+  margin-top:32px;
+  box-shadow:0 2px 20px rgba(42,36,32,0.06);
+}
+.cta-title{
+  font-family:'Noto Serif JP',serif;
+  font-size:20px;
+  font-weight:700;
+  margin-bottom:12px;
+  color:var(--text);
+}
+.cta-body{
+  font-size:14px;
+  color:var(--text2);
+  line-height:1.9;
+  margin-bottom:28px;
+}
+.btn-line{
+  background:#06C755;
+  color:#fff;
+  font-weight:700;
+  font-size:15px;
+  border-radius:var(--radius);
+  padding:18px 32px;
+  width:100%;
+  border:none;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  transition:all 0.3s ease;
+  font-family:'Noto Sans JP',sans-serif;
+  letter-spacing:0.05em;
+}
+.btn-line:hover{
+  background:#04a844;
+  transform:translateY(-2px);
+  box-shadow:0 8px 30px rgba(6,199,85,0.25);
+}
+.btn-retry{
+  margin-top:12px;
+  font-size:13px;
+  color:var(--text3);
+  background:none;
+  border:none;
+  cursor:pointer;
+  font-family:'Noto Sans JP',sans-serif;
+  letter-spacing:0.05em;
+  text-decoration:underline;
+  text-underline-offset:3px;
+  display:block;
+  width:100%;
+  text-align:center;
+  padding:8px;
+}
+.btn-retry:hover{color:var(--text2)}
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(20px)}
+  to{opacity:1;transform:translateY(0)}
+}
+.animate-in{animation:fadeUp 0.5s cubic-bezier(0.4,0,0.2,1) both}
+.footer{
+  text-align:center;
+  padding:48px 0 60px;
+  font-size:12px;
+  color:var(--text3);
+  letter-spacing:0.05em;
+}
+.screen{display:none}
+.screen.active{display:block}
+@media(max-width:480px){
+  .card{padding:28px 20px}
+  .cta-card{padding:28px 20px}
+}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="header">
+    <div class="brand">and her</div>
+    <h1 class="title-jp"><span class="title-accent">恋愛コンパス</span>診断</h1>
+    <p class="subtitle">あなたの恋愛が動き出す場所がわかる</p>
+    <div class="tags">
+      <span class="tag">全15問</span>
+      <span class="tag">約5分</span>
+      <span class="tag">無料</span>
+      <span class="tag">全16タイプ</span>
+    </div>
+  </div>
+
+  <!-- スタート -->
+  <div id="screen-start" class="screen active">
+    <div class="card animate-in">
+      <span class="intro-icon">🧭</span>
+      <p class="intro-body">
+        恋愛がうまくいかない理由は、<br>「出会いがない」だけじゃないかもしれません。<br><br>
+        この診断では、あなたの<strong style="color:var(--text);font-weight:500">恋愛のパターンと<br>詰まっている場所</strong>を一緒に見つけます。<br><br>
+        レベルを測るものではありません。<br>正解もありません。直感で答えてください。
+      </p>
+      <div class="divider"></div>
+      <button class="btn btn-primary" onclick="startQuiz()">診断をはじめる</button>
+      <p class="intro-note">所要時間：約5分　結果はすぐ表示されます</p>
+    </div>
+  </div>
+
+  <!-- 質問 -->
+  <div id="screen-quiz" class="screen">
+    <div class="progress-wrap">
+      <div class="progress-label">
+        <span id="q-progress-text">質問 1 / 15</span>
+        <span id="q-progress-pct">7%</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progress-fill" style="width:7%"></div>
+      </div>
+    </div>
+    <div class="card animate-in" id="quiz-card">
+      <div class="q-section" id="q-section"></div>
+      <div class="q-number" id="q-number"></div>
+      <div class="q-text" id="q-text"></div>
+      <div class="choices" id="choices"></div>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:center">
+      <button class="btn btn-primary" id="btn-next" onclick="nextQuestion()" disabled>次へ進む →</button>
+      <button class="btn btn-ghost" id="btn-prev" onclick="prevQuestion()">← 前の質問に戻る</button>
+    </div>
+  </div>
+
+  <!-- 結果 -->
+  <div id="screen-result" class="screen">
+    <div class="card animate-in" id="result-card"></div>
+    <div class="cta-card animate-in">
+      <p class="cta-title">あなたの「次の一歩」を<br>一緒に考えませんか？</p>
+      <p class="cta-body">
+        診断結果をもとに、and herのトレーナーが<br>
+        あなただけのカリキュラムをご提案します。<br>
+        まずは無料の個別相談から。
+      </p>
+      <button class="btn-line" onclick="openLine()">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63h2.386c.349 0 .63.285.63.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63.349 0 .631.285.631.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.281.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.070 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg>
+        LINEで無料相談する
+      </button>
+      <button class="btn-retry" onclick="retryQuiz()">もう一度診断する</button>
+    </div>
+    <div class="footer">© and her / 株式会社and people</div>
+  </div>
+</div>
+
+<script>
+const QUESTIONS = [
+  {section:"自己表現",text:"気になる人ができたとき、その気持ちはどこにありますか？",choices:[
+    {text:"頭の中でずっと考えているが、誰にも言わない",axis:"A",val:"I"},
+    {text:"親しい友人には話すが、本人には気づかせない",axis:"A",val:"I"},
+    {text:"友達に話しながら、相手にも少しずつ伝えていく",axis:"A",val:"E"},
+    {text:"気持ちができたらわりとすぐ、相手に気づかせようとする",axis:"A",val:"E"}
+  ]},
+  {section:"行動の動機",text:"好きな人に連絡するとき、何が背中を押しますか？",choices:[
+    {text:"「会いたい」という気持ちが高まったとき",axis:"B",val:"H"},
+    {text:"相手から何かアクションがあったとき",axis:"B",val:"H"},
+    {text:"「このタイミングなら自然かな」と判断したとき",axis:"B",val:"L"},
+    {text:"送る内容や理由を考えてから",axis:"B",val:"L"}
+  ]},
+  {section:"恋愛への構え",text:"今、恋愛に対してどんな気持ちに近いですか？",choices:[
+    {text:"正直あまり考えたくない。エネルギーを使いたくない",axis:"D",val:"C"},
+    {text:"したい気持ちはあるが、うまくいく気がしない",axis:"D",val:"C"},
+    {text:"不安はあるが、動いてみたいと思っている",axis:"D",val:"O"},
+    {text:"前向きに取り組みたい。変わりたいと思っている",axis:"D",val:"O"}
+  ]},
+  {section:"恋愛経験",text:"これまでに付き合った人はいますか？",choices:[
+    {text:"いない",axis:"C",val:"N"},
+    {text:"1人いる",axis:"C",val:"X"},
+    {text:"2〜3人いる",axis:"C",val:"X"},
+    {text:"4人以上いる",axis:"C",val:"X"}
+  ]},
+  {section:"自己表現",text:"デートや会話の中で、自分のことをどれくらい話していますか？",choices:[
+    {text:"ほとんど話さない。聞くことの方が多い",axis:"A",val:"I"},
+    {text:"聞かれたら答えるが、自分からは話さない",axis:"A",val:"I"},
+    {text:"自分のことも話すが、バランスを気にしすぎる",axis:"A",val:"E"},
+    {text:"気づくと自分のことをよく話している",axis:"A",val:"E"}
+  ]},
+  {section:"行動の動機",text:"デートの計画を立てるとき、何を重視しますか？",choices:[
+    {text:"相手が喜びそうな雰囲気や感覚を大事にする",axis:"B",val:"H"},
+    {text:"その場の流れに任せて、相手の反応を見ながら決める",axis:"B",val:"H"},
+    {text:"事前にリサーチして、外さないプランを組む",axis:"B",val:"L"},
+    {text:"複数の選択肢を用意して、相手に選んでもらう",axis:"B",val:"L"}
+  ]},
+  {section:"恋愛への構え",text:"好きな人ができたとき、最初に頭をよぎることは？",choices:[
+    {text:"「どうせうまくいかない」「また傷つくかも」",axis:"D",val:"C"},
+    {text:"「自分には無理かも」「釣り合わない」",axis:"D",val:"C"},
+    {text:"「どうしたら振り向いてもらえるか」",axis:"D",val:"O"},
+    {text:"「一緒にいたい」「もっと知りたい」",axis:"D",val:"O"}
+  ]},
+  {section:"恋愛経験",text:"異性と2人きりでご飯や遊びに行った経験は？",choices:[
+    {text:"ほとんどない",axis:"C",val:"N"},
+    {text:"数回ある（片手で数えられる程度）",axis:"C",val:"N"},
+    {text:"10回前後はある",axis:"C",val:"X"},
+    {text:"日常的にあった・今もある",axis:"C",val:"X"}
+  ]},
+  {section:"自己表現",text:"好きな人に「また会いたい」と思ったとき、どうしますか？",choices:[
+    {text:"相手から連絡が来るのをじっと待つ",axis:"A",val:"I"},
+    {text:"タイミングを探しながら、なかなか動けない",axis:"A",val:"I"},
+    {text:"少し時間をおいてから、それとなく連絡する",axis:"A",val:"E"},
+    {text:"思ったらわりとすぐ、次の約束を取り付けようとする",axis:"A",val:"E"}
+  ]},
+  {section:"行動の動機",text:"恋愛がうまくいかなかったとき、最初に何をしますか？",choices:[
+    {text:"しばらく落ち込む。気持ちが整理されるまで時間がかかる",axis:"B",val:"H"},
+    {text:"誰かに話を聞いてもらいたくなる",axis:"B",val:"H"},
+    {text:"一人で「なぜうまくいかなかったか」を考え始める",axis:"B",val:"L"},
+    {text:"気持ちを切り替えて、次のことを考えようとする",axis:"B",val:"L"}
+  ]},
+  {section:"恋愛への構え",text:"恋愛がうまくいかなかった経験を思い出すと？",choices:[
+    {text:"思い出したくない。できるだけ考えないようにしている",axis:"D",val:"C"},
+    {text:"あのときのことが頭にあって、同じことが怖い",axis:"D",val:"C"},
+    {text:"辛かったけど、それも含めて経験だと思っている",axis:"D",val:"O"},
+    {text:"うまくいかなかった理由が少しわかる気がする",axis:"D",val:"O"}
+  ]},
+  {section:"恋愛経験",text:"好きな人に気持ちを伝えたこと（言葉・行動どちらでも）はありますか？",choices:[
+    {text:"ない",axis:"C",val:"N"},
+    {text:"一度だけある",axis:"C",val:"X"},
+    {text:"何度かある",axis:"C",val:"X"},
+    {text:"積極的に伝えてきた方だと思う",axis:"C",val:"X"}
+  ]},
+  {section:"自己表現",text:"自分の「好き」という気持ちは、相手に伝わっていると思いますか？",choices:[
+    {text:"たぶん全然気づかれていない",axis:"A",val:"I"},
+    {text:"気づかれているかどうか、正直わからない",axis:"A",val:"I"},
+    {text:"なんとなく気づいてくれていると思う",axis:"A",val:"E"},
+    {text:"伝えようと意識して行動しているので、伝わっていると思う",axis:"A",val:"E"}
+  ]},
+  {section:"行動の動機",text:"恋愛において「直感」と「判断」どちらを信じますか？",choices:[
+    {text:"直感を信じる。合うかどうかは感じればわかる",axis:"B",val:"H"},
+    {text:"直感は大事だが、気持ちに流されすぎないようにしている",axis:"B",val:"H"},
+    {text:"ある程度一緒にいてから、相手を見極めて判断する",axis:"B",val:"L"},
+    {text:"直感より、価値観や条件が合うかどうかを重視する",axis:"B",val:"L"}
+  ]},
+  {section:"恋愛への構え",text:"「恋愛がうまくいっている自分」を想像できますか？",choices:[
+    {text:"正直あまりイメージできない",axis:"D",val:"C"},
+    {text:"イメージはできるが、現実感がない",axis:"D",val:"C"},
+    {text:"ぼんやりとだがイメージできる",axis:"D",val:"O"},
+    {text:"わりと具体的にイメージできる",axis:"D",val:"O"}
+  ]}
+];
+
+const TYPES = {
+  "IHNO":{name:"静かな初恋人",sub:"気持ちはある、でもまだ誰も知らない。",
+    str:"あなたは感情が豊かで、人を深く想える人です。好きになったら一途で、相手のことを誰よりも丁寧に見ています。その誠実さは、恋愛において本物の武器になります。",
+    pattern:"気持ちが内側で育ちすぎて、伝える前に完成してしまいます。「もう少し仲良くなってから」と思ううちに、気づいたら機会が消えている。相手からは「優しい人」として好かれているのに、恋愛対象として意識されないまま終わることが多いです。",
+    action:"必要なのは大きな告白ではありません。趣味のこと、最近嬉しかったこと、ちょっとした本音。<strong>小さな自己開示を一つ増やすだけで、相手の目線が変わります。</strong>",
+    tags:["一途さ◎","誠実","自己開示が少ない"]},
+  "IHNC":{name:"凍てついた純情人",sub:"傷つくのが怖くて、気持ちごと閉じてしまった。",
+    str:"あなたは傷つくほど真剣に誰かを好きになれた人です。それは誰にでもできることではありません。深く愛せる力は、あなたの本質的な強みです。",
+    pattern:"過去の痛みが「また同じことになる」という声になって、気持ちが動きそうになるたびにブレーキをかけます。近づきたいのに、近づく前に理由を探して遠ざかってしまいます。",
+    action:"今必要なのは「強くなること」ではなく、<strong>安全な場所で少しだけ動いてみること</strong>です。同じパターンを繰り返さないための準備が、あなたの次の一歩になります。",
+    tags:["深く愛せる","慎重","安心できる環境が必要"]},
+  "IHXO":{name:"奥底に炎を持つ人",sub:"経験を重ねても、想いは内側で燃えている。",
+    str:"経験を重ねながらも、人を深く想える感情を失っていません。表には出さないけれど、好きになったときの熱量は本物です。落ち着いた雰囲気の中に、芯の強さを持っています。",
+    pattern:"気持ちを外に出すことへの苦手意識が、経験を積んでも変わっていません。関係が深まりかけたところで、自分の気持ちを見せられずに止まってしまうことがあります。",
+    action:"あなたにはすでに経験という土台があります。あとは<strong>「見せる練習」だけ</strong>です。完璧なタイミングを待たずに、小さく自分を開示する習慣が関係を次のステージへ進めます。",
+    tags:["経験◎","芯が強い","見せることが苦手"]},
+  "IHXC":{name:"愛を知る隠者",sub:"深く愛したからこそ、もう近づけない。",
+    str:"あなたは恋愛の喜びも痛みも、両方を知っています。その深さは本物志向の表れです。人を見る目が養われていて、表面的なことに惑わされない芯があります。",
+    pattern:"「また同じことになるかもしれない」という確信に近い恐怖があります。経験があるからこそ失敗のパターンが見えてしまい、動く前から結末を想像して踏み出せないまま時間が過ぎていきます。",
+    action:"必要なのは過去の経験を「失敗」として終わらせないことです。<strong>うまくいかなかった本当の理由を理解できれば、同じパターンは繰り返しません。</strong>あなたにはその理解力が十分あります。",
+    tags:["本物志向","洞察力◎","行動への壁が高い"]},
+  "ILNO":{name:"設計図のない建築家",sub:"完璧なプランを描くが、まだ着工していない。",
+    str:"あなたは物事を論理的に整理する力があります。恋愛においても相手のことを冷静に観察できます。感情に流されないことは、長い関係において大きな強みになります。",
+    pattern:"考える力があるがゆえに「完璧なプランができるまで動かない」罠にはまっています。「もう少し準備してから」と思い続けて、実は何年も経っていることがあります。頭の中では何度も恋愛しているのに、現実では一歩も動いていない状態です。",
+    action:"恋愛に完璧なタイミングは来ません。<strong>「7割の準備で動く」という感覚を一度体験する</strong>ことが、あなたの突破口になります。",
+    tags:["分析力◎","計画的","完璧を待ちすぎる"]},
+  "ILNC":{name:"霧の中の旅人",sub:"正解を探しているうちに、どこへ向かうかわからなくなった。",
+    str:"あなたは自分を客観的に見ようとする誠実さを持っています。慎重さは、大切な場面で相手を傷つけない配慮にもなります。",
+    pattern:"正解を探しているうちに、どこへ向かえばいいかわからなくなっています。考えれば考えるほど「自分には無理かもしれない」という結論に近づいてしまい、動くエネルギーが出てきません。",
+    action:"今のあなたに必要なのは「正解を見つけること」ではなく、<strong>「霧の中を一歩だけ進んでみること」</strong>です。次の一手だけを決めることが、霧を晴らす唯一の方法です。",
+    tags:["誠実さ◎","自己分析","方向感が薄い"]},
+  "ILXO":{name:"静かな観察者",sub:"経験と思考力がある。あとは動くだけ。",
+    str:"経験と思考力の両方を持っています。相手のことをよく観察して、適切な距離感で接することができます。落ち着いて関係を築ける安心感は、多くの人に信頼されます。",
+    pattern:"「観察する」ことに慣れすぎて、「動く」ことへの踏み出しが遅くなっています。タイミングを見極めようとするうちに、相手に「興味がないのかな」と思われてしまうことがあります。",
+    action:"あなたにはすでに必要なものが揃っています。<strong>「見るから動くへ」のスイッチを切り替えるだけ</strong>です。動きながら確認する感覚を練習することが次の一歩です。",
+    tags:["観察力◎","経験あり","踏み出しが遅い"]},
+  "ILXC":{name:"賢すぎる傍観者",sub:"わかりすぎるから、動けない。",
+    str:"あなたは恋愛を深く理解しています。経験から学んだことが積み重なっていて、何が大切かを知っている。その知性と洞察力は、本物の関係を築くための大きな資産です。",
+    pattern:"わかりすぎるから動けない。相手の気持ちも、関係の行方も、うまくいかないシナリオも、全部見えてしまう。結果「どうせ」という言葉が先に来てしまいます。",
+    action:"あなたの頭は正直すぎるほど正直です。でも恋愛はリスクを計算しきれるものではありません。<strong>「わからないまま動く」という経験が、今のあなたには一番必要なことです。</strong>",
+    tags:["知性◎","洞察力高い","「どうせ」が先に来る"]},
+  "EHNO":{name:"全力疾走の青年",sub:"気持ちを隠せない、でも加速のコントロールがまだ。",
+    str:"あなたには恋愛への熱量と行動力があります。気持ちを外に出せる、動ける、これは多くの人が羨む力です。その真っ直ぐさは、相手に本気が伝わる最大の武器になります。",
+    pattern:"熱量が相手のペースより先に走ってしまいます。好きという気持ちが行動ににじみ出るのはいいことですが、相手がまだ準備できていないタイミングで全速力で向かうと、距離を置かれてしまいます。",
+    action:"あなたに必要なのはブレーキではなく、<strong>ギアチェンジです</strong>。相手のペースを読みながら加速する感覚を覚えることで、その行動力が一気に武器になります。",
+    tags:["行動力◎","熱量がある","ペース配分が課題"]},
+  "EHNC":{name:"翼の折れた情熱家",sub:"行動したからこそ、傷ついた。",
+    str:"あなたはもともと、気持ちを外に出せる人間です。行動できる力も、人を想える深さも持っています。過去に本気で誰かと向き合ったこと、それ自体があなたの強さの証明です。",
+    pattern:"行動した結果として傷ついた記憶が、体にブレーキをかけています。動きたい気持ちはある、でも「またあんな思いをするかもしれない」という声が先に来てしまう。",
+    action:"翼は折れても、また飛べます。ただ、<strong>同じ飛び方をしたらまた折れる可能性がある</strong>。過去にうまくいかなかったパターンを理解して、少し違うアプローチを知ることが翼を修復する一歩です。",
+    tags:["本来は行動派","深く愛せる","パターンの変化が必要"]},
+  "EHXO":{name:"百戦錬磨の熱量人",sub:"経験も行動力もある、次のステージへ。",
+    str:"行動力、経験、そして人を想える感情。三つが揃っています。これまでの経験が自信になっていて、恋愛における引き出しも多い。そのエネルギーは周りの人を惹きつける力があります。",
+    pattern:"今のあなたが詰まるとしたら、それは入口ではなく「深まる段階」です。関係を始めることは得意でも、深めていく局面で自分のペースで進んでしまうことがあります。",
+    action:"次のステージは<strong>「与える」から「受け取る」へのシフト</strong>です。相手が何を感じているか、何を必要としているかを丁寧に受け取る練習が、関係をさらに深いところへ連れていきます。",
+    tags:["行動力◎","経験豊富","深さへの移行が課題"]},
+  "EHXC":{name:"傷だらけの突撃隊長",sub:"何度傷ついても、また動いてしまう。",
+    str:"何度傷ついても、また動いてしまう。それはあなたが本質的に「人が好き」だからです。そのエネルギーは本物で、誰かと本気でつながりたいという気持ちはあなたの核心にあります。",
+    pattern:"行動するたびに傷ついてきた歴史があります。でも止まれないから、また同じパターンで突っ込んでしまう。傷が増えるほど「どうせ自分は」という気持ちが積み重なっていきます。",
+    action:"必要なのは「もっと頑張ること」ではなく<strong>「パターンを変えること」</strong>です。突撃の勇気はすでにある。方向と方法を少し変えるだけで、同じエネルギーが全然違う結果を生みます。",
+    tags:["人への愛情◎","行動派","パターン変化が急務"]},
+  "ELNO":{name:"完璧主義の新星",sub:"準備は整っている、あとは最初の一歩だけ。",
+    str:"論理的に物事を考えられて、行動に移す力もある。恋愛においても「どうすればうまくいくか」を考えながら動けるので、場当たり的なミスが少ないです。",
+    pattern:"完璧なプランが整うまで動けない罠にはまっています。「このタイミングじゃない」という判断が積み重なって、気づいたら機会が消えている。経験がないぶん、最初の一歩への心理的ハードルが実際より高く見えています。",
+    action:"あなたの準備力は本物です。ただ恋愛は準備が100%整ってから始まるものではありません。<strong>「80%で動く」という感覚を一度体験する</strong>と、完璧主義がちょうどいい慎重さに変わっていきます。",
+    tags:["計画力◎","論理的","80%で動く練習が必要"]},
+  "ELNC":{name:"鎧を着た参謀",sub:"頭は動いている、でも心に鍵がかかっている。",
+    str:"頭が動いていて、行動力もある。本来はかなり動けるタイプです。物事を整理して伝える力があり、一緒にいて頼りになる存在感があります。",
+    pattern:"頭は動いているのに、心に鍵がかかっています。過去の傷が「また傷つくくらいなら動かない方がいい」という判断に変わっていて、論理がその判断を正当化し続けています。",
+    action:"鎧を脱ぐ必要はありません。でも、<strong>少しだけ隙間を作ることはできます</strong>。ほんの少し自分の本音を見せる練習が、止まっていた流れを動かし始めます。",
+    tags:["論理力◎","行動力あり","心の鍵を開く練習が必要"]},
+  "ELXO":{name:"余裕ある戦略家",sub:"経験と頭脳が揃った、一番危ないのは停滞。",
+    str:"経験と論理と行動力が揃っています。恋愛における引き出しが多く、場の空気を読みながら動ける。一緒にいて安心感があり、リードできるタイプです。",
+    pattern:"うまく進められるからこそ、ある一定の深さで関係が止まりがちです。戦略的に動けるぶん、予測できない展開に対して無意識に距離を置いてしまうことがあります。",
+    action:"次のステージは<strong>「コントロールを手放す練習」</strong>です。うまくやることより、本音をさらけ出すことの方が、関係を深いところへ連れていきます。",
+    tags:["戦略力◎","経験豊富","深さへの踏み込みが課題"]},
+  "ELXC":{name:"撤退を選んだ将軍",sub:"戦い方は知っている、でも戦場に戻れない。",
+    str:"あなたは恋愛の戦い方を知っています。経験から学んだ知恵があり、人を見る目も養われています。その深さと思慮は、本物の関係を築ける力になります。",
+    pattern:"戦い方を知っているからこそ、負けるリスクも見えてしまいます。過去の傷が「また同じことになる」という確信を強化していて、今は戦場に戻る理由を見つけられない状態です。",
+    action:"撤退は負けではありません。でも、<strong>撤退したまま終わる必要もない</strong>。過去と少し違うアプローチを知ることで、また動き出せます。あなたにはその経験と知性が揃っています。",
+    tags:["知性◎","経験豊富","再起動のきっかけが必要"]}
+};
+
+const AXIS_LABELS = {
+  A:{I:"内向",E:"外向"},
+  B:{H:"ハート",L:"ロジック"},
+  C:{N:"経験少なめ",X:"経験あり"},
+  D:{O:"オープン",C:"クローズ"}
+};
+
+let current=0,answers={};
+
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function startQuiz(){
+  current=0;answers={};
+  showScreen('screen-quiz');
+  renderQuestion();
+}
+
+function renderQuestion(){
+  const q=QUESTIONS[current];
+  const card=document.getElementById('quiz-card');
+  card.style.animation='none';card.offsetHeight;
+  card.style.animation='fadeUp 0.4s cubic-bezier(0.4,0,0.2,1) both';
+  document.getElementById('q-section').textContent=q.section;
+  document.getElementById('q-number').textContent='質問 '+(current+1)+' / '+QUESTIONS.length;
+  document.getElementById('q-text').textContent=q.text;
+  const choicesEl=document.getElementById('choices');
+  choicesEl.innerHTML='';
+  q.choices.forEach((c,i)=>{
+    const div=document.createElement('div');
+    div.className='choice'+(answers[current]===i?' selected':'');
+    div.textContent=c.text;
+    div.onclick=()=>selectChoice(i);
+    choicesEl.appendChild(div);
+  });
+  const pct=Math.round((current+1)/QUESTIONS.length*100);
+  document.getElementById('q-progress-text').textContent='質問 '+(current+1)+' / '+QUESTIONS.length;
+  document.getElementById('q-progress-pct').textContent=pct+'%';
+  document.getElementById('progress-fill').style.width=pct+'%';
+  document.getElementById('btn-next').disabled=answers[current]===undefined;
+  document.getElementById('btn-prev').style.visibility=current===0?'hidden':'visible';
+  document.getElementById('btn-next').textContent=current===QUESTIONS.length-1?'結果を見る ✦':'次へ進む →';
+}
+
+function selectChoice(i){
+  answers[current]=i;
+  document.querySelectorAll('.choice').forEach((c,idx)=>c.classList.toggle('selected',idx===i));
+  document.getElementById('btn-next').disabled=false;
+}
+
+function nextQuestion(){
+  if(answers[current]===undefined)return;
+  if(current<QUESTIONS.length-1){current++;renderQuestion();}
+  else showResult();
+}
+
+function prevQuestion(){
+  if(current>0){current--;renderQuestion();}
+}
+
+function calcType(){
+  const score={A:{I:0,E:0},B:{H:0,L:0},C:{N:0,X:0},D:{O:0,C:0}};
+  QUESTIONS.forEach((q,i)=>{
+    if(answers[i]===undefined)return;
+    const c=q.choices[answers[i]];
+    score[c.axis][c.val]++;
+  });
+  const A=score.A.E>=score.A.I?'E':'I';
+  const B=score.B.H>=score.B.L?'H':'L';
+  const C=score.C.X>=score.C.N?'X':'N';
+  const D=score.D.O>=score.D.C?'O':'C';
+  return A+B+C+D;
+}
+
+function showResult(){
+  const key=calcType();
+  const t=TYPES[key]||TYPES['IHNO'];
+  const aA=key[0],aB=key[1],aC=key[2],aD=key[3];
+
+  const dotX = aA==='E' ? 72 : 28;
+  const dotY = aB==='H' ? 72 : 28;
+
+  const card=document.getElementById('result-card');
+  card.innerHTML=`
+    <div style="text-align:center;margin-bottom:8px">
+      <span class="result-badge">診断結果</span>
+    </div>
+    <div style="text-align:center;margin-bottom:32px">
+      <div class="result-code">${key}型</div>
+      <div class="result-type">${t.name}</div>
+      <div class="result-sub">${t.sub}</div>
+    </div>
+    <div style="margin:28px 0">
+      <div class="axis-grid">
+        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+          <rect x="10" y="10" width="180" height="180" fill="none" stroke="rgba(160,120,48,0.15)" stroke-width="0.5" rx="4"/>
+          <line x1="100" y1="10" x2="100" y2="190" stroke="rgba(160,120,48,0.15)" stroke-width="0.5"/>
+          <line x1="10" y1="100" x2="190" y2="100" stroke="rgba(160,120,48,0.15)" stroke-width="0.5"/>
+          <text x="100" y="7" text-anchor="middle" font-size="8" fill="rgba(160,120,48,0.6)" font-family="'Noto Sans JP',sans-serif">ハート</text>
+          <text x="100" y="199" text-anchor="middle" font-size="8" fill="rgba(160,120,48,0.6)" font-family="'Noto Sans JP',sans-serif">ロジック</text>
+          <text x="8" y="103" text-anchor="end" font-size="8" fill="rgba(160,120,48,0.6)" font-family="'Noto Sans JP',sans-serif">内</text>
+          <text x="192" y="103" text-anchor="start" font-size="8" fill="rgba(160,120,48,0.6)" font-family="'Noto Sans JP',sans-serif">外</text>
+          <circle cx="${10+dotX*1.8}" cy="${10+dotY*1.8}" r="14" fill="rgba(160,120,48,0.08)" stroke="rgba(160,120,48,0.3)" stroke-width="0.5"/>
+          <circle cx="${10+dotX*1.8}" cy="${10+dotY*1.8}" r="6" fill="#a07830"/>
+        </svg>
+      </div>
+      <div class="axis-labels">
+        <div class="axis-label">自己表現：<span>${AXIS_LABELS.A[aA]}</span></div>
+        <div class="axis-label">動機：<span>${AXIS_LABELS.B[aB]}</span></div>
+        <div class="axis-label">経験：<span>${AXIS_LABELS.C[aC]}</span></div>
+        <div class="axis-label">構え：<span>${AXIS_LABELS.D[aD]}</span></div>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div class="result-block">
+      <div class="result-block-label">あなたの強み</div>
+      <div class="result-block-text">${t.str}</div>
+    </div>
+    <div class="result-block">
+      <div class="result-block-label">詰まりのパターン</div>
+      <div class="result-block-text">${t.pattern}</div>
+    </div>
+    <div class="result-block">
+      <div class="result-block-label">改善の方向性</div>
+      <div class="result-block-text">${t.action}</div>
+    </div>
+    <div class="result-tags">${t.tags.map(tag=>`<span class="result-tag">${tag}</span>`).join('')}</div>
+  `;
+  showScreen('screen-result');
+}
+
+function retryQuiz(){current=0;answers={};showScreen('screen-start');}
+function openLine(){window.open('https://lin.ee/XXXXXXX','_blank');}
+</script>
+</body>
+</html>
